@@ -1,4 +1,4 @@
-resource "azurerm_mssql_server" "mssql-server" {
+resource "azurerm_mssql_server" "mssql-server-flight-booking" {
   name                         = "dept-dev-sqlserver-flight"
   resource_group_name          = azurerm_resource_group.resource-group-flight-booking.name
   location                     = azurerm_resource_group.resource-group-fight-booking.location
@@ -12,9 +12,9 @@ resource "azurerm_mssql_server" "mssql-server" {
   }
 }
 
-resource "azurerm_mssql_database" "mssql-database" {
-  name         = "translationDB"
-  server_id    = azurerm_mssql_server.mssql-server.id
+resource "azurerm_mssql_database" "mssql-database-flight-booking" {
+  name         = "flight-booking"
+  server_id    = azurerm_mssql_server.mssql-server-flight-booking.id
   collation    = "SQL_Latin1_General_CP1_CI_AS"
   license_type = "LicenseIncluded"
   max_size_gb  = 10
@@ -32,9 +32,9 @@ resource "azurerm_mssql_database" "mssql-database" {
   }
 }
 
-resource "azurerm_mssql_firewall_rule" "mssql-firewall-rule" {
+resource "azurerm_mssql_firewall_rule" "mssql-flight-booking-firewall-rule" {
   name             = "AllowAllAzureResources"
-  server_id        = azurerm_mssql_server.mssql-server.id
+  server_id        = azurerm_mssql_server.mssql-server-flight-booking.id
   start_ip_address = "0.0.0.0"
   end_ip_address   = "0.0.0.0"
 }

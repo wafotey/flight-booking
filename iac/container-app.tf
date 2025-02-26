@@ -1,12 +1,12 @@
-resource "azurerm_container_app" "container_app" {
-  name                         = "dept-dev-container-app-trans"
+resource "azurerm_container_app" "container-app-flight-booking" {
+  name                         = "dept-dev-container-app-flight"
   container_app_environment_id = azurerm_container_app_environment.container_app_environment.id
-  resource_group_name          = azurerm_resource_group.resource-group-translation.name
+  resource_group_name          = azurerm_resource_group.resource-group-flight-booking.name
   revision_mode                = "Multiple"
 
   template {
     container {
-      name   = "dept-dev-template-container-translation"
+      name   = "dept-dev-template-container-flight-booking"
       image  = "mcr.microsoft.com/k8se/quickstart:latest"
       cpu    = 0.25
       memory = "0.5Gi"
