@@ -67,7 +67,7 @@ jobs:
           ingress: external
           containerAppName: dept-dev-container-app-flight
           containerAppEnvironment: DeptDevContainerAppEnvironmentFlightBooking
-          resourceGroup: dept-dev-resource-group-flight-booking
+          resourceGroup: dept-dev-resource-group-flight-booking 
           environmentVariables:
             ASPNETCORE_ENVIRONMENT=Development ASPNETCORE_URL=https://+:8080 ConnectionStrings__BookingDbContext=${{ env.DB_CONNECTION_STRING }}
 
