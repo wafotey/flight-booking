@@ -18,8 +18,6 @@ jobs:
         with:
           dotnet-version: '9.0'  # Specify the .NET version to use
 
-  
-
       - name: Log in to Azure Container Registry
         uses: azure/docker-login@v2
         with:
@@ -35,14 +33,15 @@ jobs:
       - name: Build Docker image
         env: 
           IMAGE_TAG: ${{ env.sha }}
-          ACR_REGISTRY: ${{ vars.ACR_LOGIN_SERVER  }}  # The name of your ACR registry
+          ACR_REGISTRY: ${{ vars.ACR_LOGIN_SERVER }}  # The name of your ACR registry
         run: |
           docker build -f ./FlightBooking.Application/Dockerfile -t ${{ env.ACR_REGISTRY }}/flight-booking-app:${{ env.IMAGE_TAG }} -t ${{ env.ACR_REGISTRY }}/flight-booking-app:latest .
 
       #  Push the Docker image to Azure Container Registry
       - name: Push Docker image to ACR
         run: |
-          docker push ${{ vars.ACR_LOGIN_SERVER }}/flight-booking-app --all-tags # Push the image to ACR
+          docker push ${{ env.ACR_REGISTRY }}/flight-booking-app:${{ env.IMAGE_TAG }}
+          docker push ${{ env.ACR_REGISTRY }}/flight-booking-app:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -57,27 +56,29 @@ jobs:
       - name: Build and Deploy to Azure container app
         uses: azure/container-apps-deploy-action@v1
         env: 
-          IMAGE_TAG: ${{ needs.build.env.sha }}
-          ACR_REGISTRY: ${{ vars.ACR_LOGIN_SERVER  }}  # The name of your ACR registry
+          IMAGE_TAG: ${{ needs.build.outputs.sha }}
+          ACR_REGISTRY: ${{ vars.ACR_LOGIN_SERVER }}  # The name of your ACR registry
           DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
         with:
-          registryUrl : ${{ vars.ACR_LOGIN_SERVER }}  # The name of your Azure App Service
-          imageToDeploy: ${{ env.ACR_REGISTRY }}/flight-booking-app${{ env.IMAGE_TAG }}  # The image to deploy
+          registryUrl: ${{ vars.ACR_LOGIN_SERVER }}  # The name of your ACR registry
+          imageToDeploy: ${{ env.ACR_REGISTRY }}/flight-booking-app:${{ env.IMAGE_TAG }}  # The image to deploy
           targetPort: 8080  # The port to expose the container on
           ingress: external
           containerAppName: dept-dev-container-app-flight
           containerAppEnvironment: DeptDevContainerAppEnvironmentFlightBooking
           resourceGroup: dept-dev-resource-group-flight-booking 
-          environmentVariables:
-            ASPNETCORE_ENVIRONMENT=Development ASPNETCORE_URL=https://+:8080 ConnectionStrings__BookingDbContext=${{ env.DB_CONNECTION_STRING }}
+          environmentVariables: |
+            ASPNETCORE_ENVIRONMENT=Development
+            ASPNETCORE_URL=https://+:8080
+            ConnectionStrings__BookingDbContext=${{ secrets.DB_CONNECTION_STRING }}
 
-      # - name: Bundle EF Migrations
-      #   run: |
-      #     echo "Creating migration bundle..."
-      #     dotnet tool install --global dotnet-ef
-      #     dotnet ef migrations bundle --project FlightBooking.Application.csproj --output migrations/bundle
+      - name: Bundle EF Migrations
+        run: |
+          echo "Creating migration bundle..."
+          dotnet tool install --global dotnet-ef
+          dotnet ef migrations bundle --project FlightBooking.Application.csproj --output migrations/bundle
 
-      # - name: Run EF Migrations
-      #   run: |
-      #     echo "Running migrations bundle..."
-      #     run ./migrations/bundle --connection ${{ secrets.DB_CONNECTION_STRING }} 
+      - name: Run EF Migrations
+        run: |
+          echo "Running migrations bundle..."
+          dotnet ef database update --project FlightBooking.Application.csproj --connection ${{ secrets.DB_CONNECTION_STRING }}
