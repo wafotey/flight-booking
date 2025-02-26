@@ -1,4 +1,4 @@
-resource "azurerm_resource_group" "resource-group-flight-booking" {
+resource "azurerm_resource_group" "resource_group_flight_booking" {
   name     = "dept-dev-resource-group-flight-booking"
   location = "Central US"
 

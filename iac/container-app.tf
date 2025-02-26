@@ -1,7 +1,7 @@
 resource "azurerm_container_app" "container-app-flight-booking" {
   name                         = "dept-dev-container-app-flight"
   container_app_environment_id = azurerm_container_app_environment.container_app_environment.id
-  resource_group_name          = azurerm_resource_group.resource-group-flight-booking.name
+  resource_group_name          = azurerm_resource_group.resource_group_flight_booking.name
   revision_mode                = "Multiple"
 
   template {

@@ -73,8 +73,8 @@ jobs:
           imageToDeploy: ${{ env.ACR_REGISTRY }}/flight-booking-app:${{ env.IMAGE_TAG }}  # The image to deploy
           targetPort: 8080  # The port to expose the container on
           ingress: external
-          containerAppName: dept-dev-container-app-trans
-          containerAppEnvironment: DeptDevContainerAppEnvironmentTranslation
-          resourceGroup: dept-dev-resource-group-translation
+          containerAppName: dept-dev-container-app-flight
+          containerAppEnvironment: DeptDevContainerAppEnvironmentFlightBooking
+          resourceGroup: dept-dev-resource-group-flight-booking
           environmentVariables:
             ASPNETCORE_ENVIRONMENT=Development ASPNETCORE_URL=https://+:8080 ConnectionStrings__BookingDbContext=${{ DB_CONNECTION_STRING }}

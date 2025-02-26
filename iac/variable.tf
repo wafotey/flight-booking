@@ -6,7 +6,7 @@ variable "env_id" {
 variable "subscription_id" {
   description = "Azure subscription id"
   type        = string
-  default     = "0e4f3999-feb9-4ab9-9bb4-2271f5965d82"
+  default     = "ad50654f-ef25-40ea-a007-1b57fba94baa"
 }
 variable "src_key" {
   description = "Azure subscription id"
