@@ -1,0 +1,70 @@
+name: Deploy .NET Application (Flight Booking System) to Azure and Push to ACR
+
+on:
+  push:
+    branches:
+      - main  # Trigger the action when pushing to the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # You can also use windows-latest if needed
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up .NET SDK
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '9.0'  # Specify the .NET version to use
+
+      - name: Log in to Azure Container Registry
+        uses: azure/docker-login@v2
+        with:
+          login-server: ${{ vars.ACR_LOGIN_SERVER }}  # The login server for ACR (e.g., <your-registry-name>.azurecr.io)
+          username: ${{ secrets.ACR_USERNAME }}  # The ACR username (can be a service principal or admin)
+          password: ${{ secrets.ACR_PASSWORD }}  # The ACR password or service principal password
+      
+      - name: SHA of the commit
+        id: commit_sha
+        run: |
+          echo "sha=$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
+      
+      - name: Build Docker image
+        env: 
+          IMAGE_TAG: ${{ env.sha }}
+          ACR_REGISTRY: ${{ vars.ACR_LOGIN_SERVER  }}  # The name of your ACR registry
+        run: |
+          docker build -f ./FlightBooking.Application/Dockerfile -t ${{ env.ACR_REGISTRY }}/flight-booking-app:${{ env.IMAGE_TAG }} -t ${{ env.ACR_REGISTRY }}/flight-booking-app:latest .
+
+      #  Push the Docker image to Azure Container Registry
+      - name: Push Docker image to ACR
+        run: |
+          docker push ${{ vars.ACR_LOGIN_SERVER }}/flight-booking-app --all-tags # Push the image to ACR
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build  # Trigger this job after the build job has completed
+    
+    steps:
+      - name: Login into Azure 
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}  # The Azure credentials to use for logging in
+
+      - name: Build and Deploy to Azure container app
+        uses: azure/container-apps-deploy-action@v1
+        env: 
+          IMAGE_TAG: ${{ needs.build.env.sha }}
+          ACR_REGISTRY: ${{ vars.ACR_LOGIN_SERVER  }}  # The name of your ACR registry
+          DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
+        with:
+          registryUrl : ${{ vars.ACR_LOGIN_SERVER }}  # The name of your Azure App Service
+          imageToDeploy: ${{ env.ACR_REGISTRY }}/flight-booking-app:${{ env.IMAGE_TAG }}  # The image to deploy
+          targetPort: 8080  # The port to expose the container on
+          ingress: external
+          containerAppName: dept-dev-container-app-trans
+          containerAppEnvironment: DeptDevContainerAppEnvironmentTranslation
+          resourceGroup: dept-dev-resource-group-translation
+          environmentVariables:
+            ASPNETCORE_ENVIRONMENT=Development ASPNETCORE_URL=https://+:8080 ConnectionStrings__BookingDbContext=${{ DB_CONNECTION_STRING }}

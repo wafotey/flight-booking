@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "LAq4mzGi+s3VuRvsinzkljAX2sqsA58VS9+iFeFm9gY=",
+  "Source": "FlightBooking.Application",
+  "BasePath": "_content/FlightBooking.Application",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

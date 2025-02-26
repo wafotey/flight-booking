@@ -1,0 +1,12 @@
+/Users/williamsbotchway/MyDocuments/project/src/flight-booking/FlightBooking.Domain/obj/Debug/net9.0/FlightBooking.Domain.csproj.AssemblyReference.cache
+/Users/williamsbotchway/MyDocuments/project/src/flight-booking/FlightBooking.Domain/obj/Debug/net9.0/FlightBooking.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/williamsbotchway/MyDocuments/project/src/flight-booking/FlightBooking.Domain/obj/Debug/net9.0/FlightBooking.Domain.AssemblyInfoInputs.cache
+/Users/williamsbotchway/MyDocuments/project/src/flight-booking/FlightBooking.Domain/obj/Debug/net9.0/FlightBooking.Domain.AssemblyInfo.cs
+/Users/williamsbotchway/MyDocuments/project/src/flight-booking/FlightBooking.Domain/obj/Debug/net9.0/FlightBooking.Domain.csproj.CoreCompileInputs.cache
+/Users/williamsbotchway/MyDocuments/project/src/flight-booking/FlightBooking.Domain/bin/Debug/net9.0/FlightBooking.Domain.deps.json
+/Users/williamsbotchway/MyDocuments/project/src/flight-booking/FlightBooking.Domain/bin/Debug/net9.0/FlightBooking.Domain.dll
+/Users/williamsbotchway/MyDocuments/project/src/flight-booking/FlightBooking.Domain/bin/Debug/net9.0/FlightBooking.Domain.pdb
+/Users/williamsbotchway/MyDocuments/project/src/flight-booking/FlightBooking.Domain/obj/Debug/net9.0/FlightBooking.Domain.dll
+/Users/williamsbotchway/MyDocuments/project/src/flight-booking/FlightBooking.Domain/obj/Debug/net9.0/refint/FlightBooking.Domain.dll
+/Users/williamsbotchway/MyDocuments/project/src/flight-booking/FlightBooking.Domain/obj/Debug/net9.0/FlightBooking.Domain.pdb
+/Users/williamsbotchway/MyDocuments/project/src/flight-booking/FlightBooking.Domain/obj/Debug/net9.0/ref/FlightBooking.Domain.dll
