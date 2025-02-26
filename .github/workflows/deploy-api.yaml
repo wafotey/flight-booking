@@ -62,7 +62,7 @@ jobs:
           DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
         with:
           registryUrl : ${{ vars.ACR_LOGIN_SERVER }}  # The name of your Azure App Service
-          imageToDeploy: ${{ env.ACR_REGISTRY }}/flight-booking-app:${{ env.IMAGE_TAG }}  # The image to deploy
+          imageToDeploy: ${{ env.ACR_REGISTRY }}/flight-booking-app${{ env.IMAGE_TAG }}  # The image to deploy
           targetPort: 8080  # The port to expose the container on
           ingress: external
           containerAppName: dept-dev-container-app-flight
@@ -71,13 +71,13 @@ jobs:
           environmentVariables:
             ASPNETCORE_ENVIRONMENT=Development ASPNETCORE_URL=https://+:8080 ConnectionStrings__BookingDbContext=${{ env.DB_CONNECTION_STRING }}
 
-      - name: Bundle EF Migrations
-        run: |
-          echo "Creating migration bundle..."
-          dotnet tool install --global dotnet-ef
-          dotnet ef migrations bundle --project FlightBooking.Application.csproj --output migrations/bundle
+      # - name: Bundle EF Migrations
+      #   run: |
+      #     echo "Creating migration bundle..."
+      #     dotnet tool install --global dotnet-ef
+      #     dotnet ef migrations bundle --project FlightBooking.Application.csproj --output migrations/bundle
 
-      - name: Run EF Migrations
-        run: |
-          echo "Running migrations bundle..."
-          run ./migrations/bundle --connection ${{ secrets.DB_CONNECTION_STRING }} 
+      # - name: Run EF Migrations
+      #   run: |
+      #     echo "Running migrations bundle..."
+      #     run ./migrations/bundle --connection ${{ secrets.DB_CONNECTION_STRING }} 

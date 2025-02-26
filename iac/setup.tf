@@ -7,7 +7,15 @@ terraform {
   }
 
   required_version = ">= 1.0"
+
+   backend "azurerm" {
+    resource_group_name   = "your-resource-group-name"
+    storage_account_name  = "yourstorageaccountname"
+    container_name        = "your-container-name"
+    key                    = "terraform.tfstate"
+  }
 }
+
 
 provider "azurerm" {
   features {}
