@@ -37,9 +37,9 @@ jobs:
       - name: Build Docker image
         env: 
           IMAGE_TAG: ${{ env.sha }}
-          ACR_REGISTRY: ${{ vars.ACR_LOGIN_SERVER  }}  # The name of your ACR registry
+          ACR_REGISTRY: ${{ vars.ACR_LOGIN_SERVER }}  # The name of your ACR registry
         run: |
-          docker build -f ./FlightBooking.Application/Dockerfile -t ${{ env.ACR_REGISTRY }}/flight-booking-app:${{ env.IMAGE_TAG }} -t ${{ env.ACR_REGISTRY }}/flight-booking-app:latest .
+          docker build -f FlightBooking.Application/Dockerfile -t ${{ env.ACR_REGISTRY }}/flight-booking-app:${{ env.IMAGE_TAG }} -t ${{ env.ACR_REGISTRY }}/flight-booking-app:latest .
 
       #  Push the Docker image to Azure Container Registry
       - name: Push Docker image to ACR
@@ -51,9 +51,6 @@ jobs:
     needs: [checkout, build]  # Trigger this job after the checkout and build jobs have completed
     
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
       - name: Login into Azure 
         uses: azure/login@v1
         with:
@@ -62,7 +59,7 @@ jobs:
       - name: Build and Deploy to Azure container app
         uses: azure/container-apps-deploy-action@v1
         env: 
-          IMAGE_TAG: ${{ needs.build.outputs.sha }}
+          IMAGE_TAG: ${{ env.sha }}
           ACR_REGISTRY: ${{ vars.ACR_LOGIN_SERVER }}  # The name of your ACR registry
           DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
         with:
