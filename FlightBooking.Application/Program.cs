@@ -20,7 +20,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory(cb =>
     cb.RegisterAssemblyModules(typeof(Program).Assembly);
 }));
 
-builder.Services.AddHostedService<MigrationHostedService>();
+//builder.Services.AddHostedService<MigrationHostedService>();
 
 //builder.Services.AddAutofac();
 builder.Services.AddOpenApi();
