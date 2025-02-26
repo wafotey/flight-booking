@@ -21,6 +21,7 @@ jobs:
       - name: Bundle EF Migrations
         run: |
           echo "Creating migration bundle..."
+          dotnet tool install --global dotnet-ef
           dotnet ef migrations bundle --project FlightBooking.Application.csproj --output migrations/bundle
 
       - name: Run EF Migrations
