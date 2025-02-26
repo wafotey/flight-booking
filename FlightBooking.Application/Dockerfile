@@ -9,8 +9,8 @@ FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG configuration=Release
 WORKDIR /src
 COPY ["FlightBooking.Application/FlightBooking.Application.csproj", "FlightBooking.Application/"]
-COPY ["FlightBooking.Application/FlightBooking.Infrastructure.csproj", "FlightBooking.Infrastructure/"]
-COPY ["FlightBooking.Application/FlightBooking.Domain.csproj", "FlightBooking.Domain/"]
+COPY ["FlightBooking.Infrastructure/FlightBooking.Infrastructure.csproj", "FlightBooking.Infrastructure/"]
+COPY ["FlightBooking.Domain/FlightBooking.Domain.csproj", "FlightBooking.Domain/"]
 RUN dotnet restore "FlightBooking.Application/FlightBooking.Application.csproj"
 COPY . .
 WORKDIR "/src/FlightBooking.Application"
