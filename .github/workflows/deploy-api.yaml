@@ -80,4 +80,4 @@ jobs:
       - name: Run EF Migrations
         run: |
           echo "Running migrations bundle..."
-          run ./migrations/bundle --connection ${{ secrets.DB_CONNECTION_STRING }}
+          run ./migrations/bundle --connection ${{ secrets.DB_CONNECTION_STRING }} 
