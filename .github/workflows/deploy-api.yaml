@@ -77,4 +77,4 @@ jobs:
           containerAppEnvironment: DeptDevContainerAppEnvironmentFlightBooking
           resourceGroup: dept-dev-resource-group-flight-booking
           environmentVariables:
-            ASPNETCORE_ENVIRONMENT=Development ASPNETCORE_URL=https://+:8080 ConnectionStrings__BookingDbContext=${{ DB_CONNECTION_STRING }}
+            ASPNETCORE_ENVIRONMENT=Development ASPNETCORE_URL=https://+:8080 ConnectionStrings__BookingDbContext=${{ env.DB_CONNECTION_STRING }}
