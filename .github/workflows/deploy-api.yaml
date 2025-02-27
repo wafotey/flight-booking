@@ -49,7 +49,7 @@ jobs:
         uses: azure/container-apps-deploy-action@v1
         with:
           registryUrl: ${{ vars.ACR_LOGIN_SERVER }}
-          imageToDeploy: ${{ env.ACR_REGISTRY }}/flight-booking-app:${{ env.IMAGE_TAG }}
+          imageToDeploy: ${{ vars.ACR_LOGIN_SERVER }}/flight-booking-app:${{ env.IMAGE_TAG }}
           targetPort: 80
           ingress: external
           containerAppName: dept-dev-container-app-flight
