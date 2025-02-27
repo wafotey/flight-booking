@@ -60,14 +60,11 @@ jobs:
             ASPNETCORE_URL=https://+:80
             ConnectionStrings__BookingDbContext=${{ secrets.DB_CONNECTION_STRING }}
 
-      - name: Bundle EF Migrations
-        env:
-          ASPNETCORE_ENVIRONMENT: Development
-          ConnectionStrings__BookingDbContext: ${{ secrets.DB_CONNECTION_STRING }}
-        run: |
-          dotnet tool install --global dotnet-ef
-          dotnet ef migrations bundle --project FlightBooking.Application/FlightBooking.Application.csproj --output FlightBooking.Application/bundle
-          ./FlightBooking.Application/bundle --connection ${{ secrets.DB_CONNECTION_STRING }}
+      # - name: Bundle EF Migrations
+      #   run: |
+      #     dotnet tool install --global dotnet-ef
+      #     dotnet ef migrations bundle --project FlightBooking.Application/FlightBooking.Application.csproj --output FlightBooking.Application/bundle
+      #     ./FlightBooking.Application/bundle --connection ${{ secrets.DB_CONNECTION_STRING }}
       
       # - name: Run EF Migrations
       #   run: FlightBooking.Application/bundle --connection ${{ secrets.DB_CONNECTION_STRING }}
