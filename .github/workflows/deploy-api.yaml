@@ -40,8 +40,8 @@ jobs:
         run: |
          echo "Repository structure:"
          ls -R
-        working-directory: flight-booking
-        
+       
+
       - name: Build Docker image
         env: 
           IMAGE_TAG: ${{ env.sha }}
