@@ -61,13 +61,12 @@ jobs:
             ConnectionStrings__BookingDbContext=${{ secrets.DB_CONNECTION_STRING }}
 
       - name: Bundle EF Migrations
+        env:
+          ASPNETCORE_ENVIRONMENT: Development
+          ConnectionStrings__BookingDbContext: ${{ secrets.DB_CONNECTION_STRING }}
         run: |
           dotnet tool install --global dotnet-ef
           dotnet ef migrations bundle --project FlightBooking.Application/FlightBooking.Application.csproj --output migrations/bundle
-        with:          
-         environmentVariables: |
-            ASPNETCORE_ENVIRONMENT=Development
-            ConnectionStrings__BookingDbContext=${{ secrets.DB_CONNECTION_STRING }}
 
       - name: Run EF Migrations
         run: ./migrations/bundle --connection ${{ secrets.DB_CONNECTION_STRING }}
