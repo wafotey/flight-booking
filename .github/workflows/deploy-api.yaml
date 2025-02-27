@@ -50,14 +50,14 @@ jobs:
         with:
           registryUrl: ${{ vars.ACR_LOGIN_SERVER }}
           imageToDeploy: ${{ env.ACR_REGISTRY }}/flight-booking-app:${{ env.IMAGE_TAG }}
-          targetPort: 8080
+          targetPort: 80
           ingress: external
           containerAppName: dept-dev-container-app-flight
           containerAppEnvironment: DeptDevContainerAppEnvironmentFlightBooking
           resourceGroup: dept-dev-resource-group-flight-booking 
           environmentVariables: |
             ASPNETCORE_ENVIRONMENT=Development
-            ASPNETCORE_URL=https://+:8080
+            ASPNETCORE_URL=https://+:80
             ConnectionStrings__BookingDbContext=${{ secrets.DB_CONNECTION_STRING }}
 
       - name: Bundle EF Migrations
