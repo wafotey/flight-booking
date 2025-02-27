@@ -19,6 +19,12 @@ jobs:
     needs: checkout
     
     steps:
+      - name: Debug repository structure
+        run: |
+          echo "Repository structure:"
+          ls -R
+        working-directory: flight-booking  # Debug the correct directory
+
       - name: Set up .NET SDK
         uses: actions/setup-dotnet@v2
         with:
@@ -36,12 +42,6 @@ jobs:
         run: |
           echo "sha=$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
       
-      - name: Debug repository structure
-        run: |
-         echo "Repository structure:"
-         ls -R
-       
-
       - name: Build Docker image
         env: 
           IMAGE_TAG: ${{ env.sha }}
