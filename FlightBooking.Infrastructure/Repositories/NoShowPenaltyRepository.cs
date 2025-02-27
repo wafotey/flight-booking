@@ -5,8 +5,8 @@ namespace FlightBooking.Infrastructure.Repositories
 {
     public class NoShowPenaltyRepository : INoShowPenaltyRepository
     {
-        private readonly BookingDbContext _context;
-        public NoShowPenaltyRepository(BookingDbContext context)
+        private readonly DbContext _context;
+        public NoShowPenaltyRepository(DbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }

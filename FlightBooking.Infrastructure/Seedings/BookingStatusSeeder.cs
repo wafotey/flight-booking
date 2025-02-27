@@ -1,12 +1,13 @@
 using FlightBooking.Domain.Aggregates.BookingAggregate;
 using FlightBooking.Domain.SharedKennel;
+using Microsoft.EntityFrameworkCore;
 
 namespace FlightBooking.Infrastructure.Seedings
 {
     public class BookingStatusSeeder : IDatabaseSeeder
     {
-        private readonly BookingDbContext _context;
-        public BookingStatusSeeder(BookingDbContext context)
+        private readonly DbContext _context;
+        public BookingStatusSeeder(DbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }

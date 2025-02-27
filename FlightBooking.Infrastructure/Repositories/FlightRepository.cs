@@ -5,8 +5,8 @@ namespace FlightBooking.Infrastructure.Repositories
 {
     public class FlightRepository : IFlightRepository
     {
-        private readonly BookingDbContext _context;
-        public FlightRepository(BookingDbContext context)
+        private readonly DbContext _context;
+        public FlightRepository(DbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }

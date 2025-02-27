@@ -1,12 +1,13 @@
 using FlightBooking.Domain.SharedKennel;
 using FlightBooking.Domain.SharedKennel.Enumerations;
+using Microsoft.EntityFrameworkCore;
 
 namespace FlightBooking.Infrastructure.Seedings
 {
     public class NationalitySeeder : IDatabaseSeeder
     {
-        private readonly BookingDbContext _context;
-        public NationalitySeeder(BookingDbContext context)
+        private readonly DbContext _context;
+        public NationalitySeeder(DbContext context)
         {
             _context = context?? throw new ArgumentNullException(nameof(context));
         }

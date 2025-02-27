@@ -6,8 +6,8 @@ namespace FlightBooking.Infrastructure.Repositories
 {
     public class CustomerRepository: ICustomerRepository
     {
-        private readonly BookingDbContext _context;
-        public CustomerRepository(BookingDbContext context){
+        private readonly DbContext _context;
+        public CustomerRepository(DbContext context){
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
         public void Add(Customer customer)

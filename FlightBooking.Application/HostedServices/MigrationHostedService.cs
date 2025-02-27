@@ -62,7 +62,7 @@ namespace FlightBooking.Application.HostedServices
 
         private Type[] GetSeederTypes()
         {
-           var assembly = typeof(BookingDbContext).Assembly;
+           var assembly = typeof(IDatabaseSeeder).Assembly;
             var seederInterface = typeof(IDatabaseSeeder);
 
             return assembly.GetTypes()

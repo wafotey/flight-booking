@@ -5,8 +5,8 @@ namespace FlightBooking.Infrastructure.Repositories
 {
     public class FlightCancellationPenaltySettingsRepository: IFlightCanellationPenaltySettingsRepository
     {
-        private readonly BookingDbContext _context;
-        public FlightCancellationPenaltySettingsRepository(BookingDbContext context)
+        private readonly DbContext _context;
+        public FlightCancellationPenaltySettingsRepository(DbContext context)
         {
             _context = context?? throw new ArgumentNullException(nameof(context));
         }
