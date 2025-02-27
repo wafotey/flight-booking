@@ -24,16 +24,21 @@ jobs:
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
 
+      # Set IMAGE_TAG from GITHUB_SHA
+      - name: Set IMAGE_TAG environment variable
+        run: echo "IMAGE_TAG=$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
+
       - name: Build Docker image
         env: 
-          IMAGE_TAG: ${{ env.sha }}
+          IMAGE_TAG: ${{ env.IMAGE_TAG }}
           ACR_REGISTRY: ${{ vars.ACR_LOGIN_SERVER }}
         run: |
           docker build -f FlightBooking.Application/Dockerfile -t ${{ env.ACR_REGISTRY }}/flight-booking-app:${{ env.IMAGE_TAG }} -t ${{ env.ACR_REGISTRY }}/flight-booking-app:latest .
 
       - name: Push Docker image to ACR
         run: |
-          docker push ${{ vars.ACR_LOGIN_SERVER }}/flight-booking-app --all-tags
+          docker push ${{ vars.ACR_LOGIN_SERVER }}/flight-booking-app:${{ env.IMAGE_TAG }}
+          docker push ${{ vars.ACR_LOGIN_SERVER }}/flight-booking-app:latest
 
       - name: Login into Azure 
         uses: azure/login@v1
