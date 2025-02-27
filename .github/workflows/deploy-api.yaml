@@ -65,5 +65,9 @@ jobs:
           dotnet tool install --global dotnet-ef
           dotnet ef migrations bundle --project FlightBooking.Application/FlightBooking.Application.csproj --output migrations/bundle
 
+      - name: Copy appsettings.json
+        run: |
+          cp ./path-to-your-appsettings.json ./FlightBooking.Application/appsettings.json
+          
       - name: Run EF Migrations
         run: ./migrations/bundle --connection ${{ secrets.DB_CONNECTION_STRING }}
