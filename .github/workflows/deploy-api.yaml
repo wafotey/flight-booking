@@ -44,7 +44,7 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-
+ 
       - name: Deploy to Azure container app
         uses: azure/container-apps-deploy-action@v1
         with:
