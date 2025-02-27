@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          path: flight-booking
 
   build:
     runs-on: ubuntu-latest  # You can also use windows-latest if needed
@@ -40,7 +42,7 @@ jobs:
           ACR_REGISTRY: ${{ vars.ACR_LOGIN_SERVER }}  # The name of your ACR registry
         run: |
           docker build -f FlightBooking.Application/Dockerfile -t ${{ env.ACR_REGISTRY }}/flight-booking-app:${{ env.IMAGE_TAG }} -t ${{ env.ACR_REGISTRY }}/flight-booking-app:latest .
-        working-directory: FlightBooking.Application  # Set the working directory
+        working-directory: flight-booking/FlightBooking.Application  # Set the working directory
 
       #  Push the Docker image to Azure Container Registry
       - name: Push Docker image to ACR
@@ -52,6 +54,11 @@ jobs:
     needs: [checkout, build]  # Trigger this job after the checkout and build jobs have completed
     
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          path: flight-booking
+
       - name: Login into Azure 
         uses: azure/login@v1
         with:
@@ -81,7 +88,8 @@ jobs:
           echo "Creating migration bundle..."
           dotnet tool install --global dotnet-ef
           dotnet ef migrations bundle --project FlightBooking.Application/FlightBooking.Application.csproj --output migrations/bundle
-        working-directory: FlightBooking.Application  # Set the working directory
+        working-directory: flight-booking/FlightBooking.Application  # Set the working directory
 
       - name: Run EF Migrations
         run: ./migrations/bundle --connection ${{ secrets.DB_CONNECTION_STRING }}
+        working-directory: flight-booking/FlightBooking.Application  # Set the working directory
